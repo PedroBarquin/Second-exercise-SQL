@@ -1,0 +1,23 @@
+SELECT apellido1, apellido2, nombre FROM persona ORDER BY apellido1, apellido2, nombre ASC;
+SELECT nombre, apellido1, apellido2 FROM persona WHERE telefono IS NULL AND tipo = 'alumno';
+SELECT nombre, apellido1, apellido2 FROM persona WHERE tipo = 'alumno' AND fecha_nacimiento = 1999;
+SELECT nombre, apellido1, apellido2 FROM persona WHERE tipo = 'profesor' AND nif LIKE 'K' AND telefono IS NULL;
+SELECT nombre FROM asignatura WHERE cuatrimestre = 1 AND curso = 3 AND id_grado = 7;
+SELECT apellido1, apellido2, persona.nombre, departamento.nombre FROM profesor JOIN persona ON persona.id = profesor.id_profesor JOIN departamento ON profesor.id_departamento = departamento.id ORDER BY apellido1 ASC;
+SELECT apellido1, apellido2, persona.nombre, departamento.nombre AS 'Departamento' FROM persona LEFT JOIN profesor ON persona.id = profesor.id_profesor LEFT JOIN departamento ON profesor.id_departamento = departamento.id ORDER BY departamento.nombre ASC;
+SELECT apellido1, apellido2, persona.nombre FROM persona LEFT JOIN profesor ON persona.id = profesor.id_profesor LEFT JOIN departamento ON profesor.id_departamento = departamento.id WHERE departamento.id IS NULL;
+SELECT * FROM departamento LEFT JOIN profesor ON departamento.id = profesor.id_departamento WHERE profesor.id_departamento IS NULL;
+SELECT asignatura.nombre, apellido1, apellido2, persona.nombre FROM asignatura LEFT JOIN profesor ON profesor.id_profesor = asignatura.id_profesor LEFT JOIN persona ON persona.id = profesor.id_profesor WHERE persona.tipo = 'profesor' AND asignatura.id_profesor IS NULL;
+SELECT asignatura.nombre, apellido1, apellido2, persona.nombre FROM asignatura LEFT JOIN profesor ON profesor.id_profesor = asignatura.id_profesor LEFT JOIN persona ON persona.id = profesor.id_profesor WHERE asignatura.id_profesor IS NULL;
+SELECT DISTINCT departamento.nombre FROM departamento LEFT JOIN profesor ON departamento.id = profesor.id_departamento LEFT JOIN asignatura ON profesor.id_profesor = asignatura.id_profesor LEFT JOIN alumno_se_matricula_asignatura ON alumno_se_matricula_asignatura.id_asignatura = asignatura.id LEFT JOIN curso_escolar ON curso_escolar.id = alumno_se_matricula_asignatura.id_curso_escolar WHERE asignatura.id_profesor IS NULL AND curso_escolar.anyo_inicio IS NULL;
+SELECT count(*)  FROM persona WHERE persona.tipo = 'alumno';
+SELECT count(*) FROM persona WHERE fecha_nacimiento = 1999;
+SELECT departamento.nombre AS 'Nombre del departamento', count(profesor.id_profesor) AS 'Profesores en este departamento' FROM profesor LEFT JOIN departamento ON departamento.id = profesor.id_departamento GROUP BY departamento.nombre ORDER BY count(profesor.id_profesor) ASC;
+SELECT departamento.nombre AS 'Nombre de departamentos', count(profesor.id_profesor) AS 'Nombres de profesores de cada departamento' FROM profesor RIGHT JOIN departamento ON profesor.id_departamento = departamento.id GROUP BY departamento.nombre ORDER BY count(profesor.id_profesor) ASC;
+SELECT grado.nombre, count(*) FROM grado LEFT JOIN asignatura ON grado.id = asignatura.id_grado GROUP BY grado.nombre ORDER BY COUNT(asignatura.id) DESC;
+SELECT grado.nombre, count(*) FROM grado LEFT JOIN asignatura ON grado.id = asignatura.id_grado GROUP BY grado.nombre having count > 40 ORDER BY COUNT(asignatura.id) ASC;
+SELECT grado.nombre, asignatura.tipo, sum(asignatura.creditos) as total_creditos  FROM grado LEFT JOIN asignatura ON grado.id = asignatura.id_grado GROUP BY grado.nombre ASC;
+SELECT curso_escolar.anyo_inicio, count(alumno_se_matricula_asignatura.id_alumno) AS 'Alumnos matriculados' FROM curso_escolar LEFT JOIN alumno_se_matricula_asignatura ON curso_escolar.id = alumno_se_matricula_asignatura.id_curso_escolar GROUP BY curso_escolar.anyo_inicio;
+SELECT persona.*, MIN(fecha_nacimiento) FROM persona WHERE persona.tipo = 'Alumno';
+SELECT persona.*, departamento.nombre FROM persona JOIN profesor ON persona.id = profesor.id_departamento LEFT JOIN asignatura ON asignatura.id = profesor.id_profesor WHERE asignatura.nombre IS NULL;
+

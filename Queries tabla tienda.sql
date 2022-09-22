@@ -1,0 +1,18 @@
+SELECT nombre FROM producto;
+SELECT nombre, precio FROM producto;
+SELECT * FROM producto;
+SELECT nombre, precio AS 'Precio en euros', TRUNCATE(precio / 1.02, 2) AS 'Precio en dolares' FROM producto;
+SELECT nombre AS 'nom de producto', precio AS 'euros', TRUNCATE(precio * 1.02, 2) AS 'dolars' FROM producto;
+SELECT UPPER(nombre) AS 'nom de producto', precio FROM producto;
+SELECT LOWER(nombre) AS 'nom de producto', precio FROM producto;
+SELECT nombre, LEFT(UPPER(nombre), 2) FROM fabricante;
+SELECT nombre AS 'nom de producto', ROUND(precio) AS 'euros' FROM producto;
+SELECT nombre AS 'nom de producto', TRUNCATE(precio, 0) AS 'euros' FROM producto;
+SELECT fabricante.codigo FROM fabricante INNER JOIN producto ON fabricante.codigo = producto.codigo_fabricante;
+SELECT DISTINCT fabricante.codigo FROM fabricante INNER JOIN producto ON fabricante.codigo = producto.codigo_fabricante;
+SELECT nombre FROM fabricante ORDER BY nombre ASC;
+SELECT nombre FROM fabricante ORDER BY nombre DESC;
+SELECT nombre FROM producto ORDER BY nombre ASC, precio DESC;
+SELECT * FROM fabricante LIMIT 5;
+SELECT nombre, precio FROM producto ORDER BY precio ASC LIMIT 1;
+SELECT nombre, precio FROM producto ORDER BY precio DESC LIMIT 1;
